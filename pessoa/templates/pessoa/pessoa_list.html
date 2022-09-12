@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% block content %}
+Listagem
+<form method="GET">
+    <input type="text" name="nome" id="nome" placeholder="Buscar por nome">
+    <input type="submit" value="Buscar">
+</form>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data de nascimento</th>
+                <th>Ativado</th>
+                <th>Ações</th>
+            </tr>
+        <tbody>
+            {% for pessoa in object_list %}
+            <tr>
+                <td>{{ pessoa.nome_completo }}</td>
+                <td>{{ pessoa.data_nascimento|date:"d/m/Y" }}</td>
+                {% if pessoa.ativado %}
+                <td>SIM</td>
+                {% else %}
+                <td>NÃO</td>
+                {% endif %}
+                <td><a href="{% url 'pessoa.update' pessoa.pk %}">Editar</a>
+                    <a href="{% url 'pessoa.delete' pessoa.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </thead>
+    </table>
+</div>
+<a href="{% url 'pessoa.create' %}">Novo</a>
+{% endblock content %}
